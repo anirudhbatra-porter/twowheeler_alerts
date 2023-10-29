@@ -11,6 +11,7 @@ import snowflake.connector
 current_user = ''
 current_account = ''
 current_warehouse = ''
+conn = None
 
 def sf_authenticate(user, account, warehouse):
   current_user = user
