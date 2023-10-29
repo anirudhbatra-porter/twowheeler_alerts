@@ -16,6 +16,3 @@ def sf_authenticate(user, account, warehouse):
     authenticator="externalbrowser",
     warehouse="WH_PROD_2_WHEELERS_XS"
   )
-
-def create_alert():
-  print('hello!')
