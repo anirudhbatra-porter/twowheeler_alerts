@@ -7,3 +7,7 @@ from dateutil import relativedelta
 import warnings
 warnings.filterwarnings("ignore")
 import snowflake.connector
+
+
+def create_alert():
+  print('hello!')
