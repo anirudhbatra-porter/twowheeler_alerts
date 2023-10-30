@@ -38,7 +38,14 @@ def create_alert(alert_type, alert_name, cron_frequency, cron_expression, email_
   elif '2_WHEELERS' not in current_warehouse:
     return 'Currently only 2 WHEELER warehouses are supported. For more information, please reach out to anirudh.batra@theporter.in'
 try:
+  check if table is created
+  if not, create table
 
+  if cron_frequency is mentioned, assign cron_expression accordingly
+  otherwise, validate cron_expression
+  try to validate the queries if possible
+  When inputs are given and this is submitted, add this entry to a table, execute a query to create the procedure (?) and task, 
+  prints a success message and shows the task ID
 except(Exception as e):
   print(f"Ran into an exception: {e}")
   
