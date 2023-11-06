@@ -18,18 +18,6 @@ def sf_authenticate(user, account, warehouse):
   conn, current_user, current_account, current_warehouse = util.sf_authenticate(user, account, warehouse)
 
 def create_alert(alert_type, alert_name, cron_frequency, cron_expression, email_list, kpi_query=None, validation_query=None, report_table_query=None):
-  if alert_type not in ['Validation', 'KPI']:
-    return 'Not a valid alert type'
-  elif cron_frequency == 'Other (specify CRON expression)' and cron_expression == '':
-    return 'Please enter a valid CRON expression'
-  elif email_list == '':
-    return 'Mailing list is empty'
-  elif alert_type == 'Validation' and (validation_query == '' or report_table_query == ''):
-    return 'Please enter a valid query'
-  elif alert_type == 'KPI' and kpi_query == '':
-    return 'Please enter a valid query'
-  elif '2_WHEELERS' not in current_warehouse:
-    return 'Currently only 2 WHEELER warehouses are supported. For more information, please reach out to anirudh.batra@theporter.in'
 try:
   validation_flag, fail_reason = utils.validate_alert(alert_type, cron_frequency, cron_expression, email_list, validation_query, report_table_query, kpi_query, current_warehouse)
   
