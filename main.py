@@ -7,7 +7,7 @@ from dateutil import relativedelta
 import warnings
 import snowflake.connector
 warnings.filterwarnings("ignore")
-import util
+import util, constants
 
 current_user = ''
 current_account = ''
@@ -37,8 +37,10 @@ try:
   if check_table_flag == False:
     create_table_sql = utils.read_sql_file('create_alerts_table.sql')
     create_table_result = utils.fetch_data(create_table_sql, conn)
+
+  if cron_frequency <> 'Other (specify CRON expression)' and cron_expression == '':
+    cron_expression = constants.cron_map[cron_frequency]
   
-  if cron_frequency is mentioned, assign cron_expression accordingly
   otherwise, validate cron_expression
   try to validate the queries if possible
   When inputs are given and this is submitted, add this entry to a table, execute a query to create the procedure (?) and task, 
