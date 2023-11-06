@@ -31,6 +31,11 @@ def create_alert(alert_type, alert_name, cron_frequency, cron_expression, email_
   elif '2_WHEELERS' not in current_warehouse:
     return 'Currently only 2 WHEELER warehouses are supported. For more information, please reach out to anirudh.batra@theporter.in'
 try:
+  validation_flag, fail_reason = utils.validate_alert(alert_type, cron_frequency, cron_expression, email_list, validation_query, report_table_query, kpi_query, current_warehouse)
+  
+  if !validation_flag:
+    Raise Exception(f"Validation failed with reason: {fail_reason}")
+    
   check_table_sql = utils.read_sql_file('check_table.sql')
   check_table_flag = utils.fetch_data(check_table_sql, conn).flag.iloc[0]
 
@@ -40,8 +45,11 @@ try:
 
   if cron_frequency <> 'Other (specify CRON expression)' and cron_expression == '':
     cron_expression = constants.cron_map[cron_frequency]
-  
-  otherwise, validate cron_expression
+
+  if utils.validate_cron_expression(cron_expression) == False:
+    return 'Please enter a valid CRON expression'
+
+  utils.validate_query()
   try to validate the queries if possible
   When inputs are given and this is submitted, add this entry to a table, execute a query to create the procedure (?) and task, 
   prints a success message and shows the task ID
