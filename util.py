@@ -15,3 +15,9 @@ def sf_authenticate(user, account, warehouse):
     warehouse = warehouse
   )
   return [conn, user, account, warehouse]
+
+def read_sql_file(file_name):
+  fd = open(file_name, 'r')
+  sqlFile = fd.read()
+  fd.close()
+  return sqlFile
