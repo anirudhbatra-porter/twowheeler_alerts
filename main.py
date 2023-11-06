@@ -32,6 +32,8 @@ def create_alert(alert_type, alert_name, cron_frequency, cron_expression, email_
     return 'Currently only 2 WHEELER warehouses are supported. For more information, please reach out to anirudh.batra@theporter.in'
 try:
   check_table_sql = utils.read_sql_file('check_table.sql')
+  check_table_flag = utils.fetch_data(check_table_sql, conn).flag.iloc[0]
+  if check_table_flag
   check if table is created
   if not, create table
 
