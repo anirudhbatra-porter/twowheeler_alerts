@@ -33,10 +33,11 @@ def create_alert(alert_type, alert_name, cron_frequency, cron_expression, email_
 try:
   check_table_sql = utils.read_sql_file('check_table.sql')
   check_table_flag = utils.fetch_data(check_table_sql, conn).flag.iloc[0]
-  if check_table_flag
-  check if table is created
-  if not, create table
 
+  if check_table_flag == False:
+    create_table_sql = utils.read_sql_file('create_alerts_table.sql')
+    create_table_result = utils.fetch_data(create_table_sql, conn)
+  
   if cron_frequency is mentioned, assign cron_expression accordingly
   otherwise, validate cron_expression
   try to validate the queries if possible
