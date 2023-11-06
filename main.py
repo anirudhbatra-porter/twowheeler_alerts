@@ -14,7 +14,8 @@ current_account = ''
 current_warehouse = ''
 conn = None
 
-conn, current_user, current_account, current_warehouse = alerts_util.sf_authenticate(user, account, warehouse)
+def sf_authenticate(user, account, warehouse):
+  conn, current_user, current_account, current_warehouse = util.sf_authenticate(user, account, warehouse)
 
 def create_alert(alert_type, alert_name, cron_frequency, cron_expression, email_list, kpi_query=None, validation_query=None, report_table_query=None):
   if alert_type not in ['Validation', 'KPI']:
