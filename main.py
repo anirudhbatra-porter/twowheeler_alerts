@@ -7,7 +7,7 @@ from dateutil import relativedelta
 import warnings
 import snowflake.connector
 warnings.filterwarnings("ignore")
-import alerts_util
+import util
 
 current_user = ''
 current_account = ''
