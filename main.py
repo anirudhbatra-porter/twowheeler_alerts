@@ -31,6 +31,7 @@ def create_alert(alert_type, alert_name, cron_frequency, cron_expression, email_
   elif '2_WHEELERS' not in current_warehouse:
     return 'Currently only 2 WHEELER warehouses are supported. For more information, please reach out to anirudh.batra@theporter.in'
 try:
+  check_table_sql = utils.read_sql_file('check_table.sql')
   check if table is created
   if not, create table
 
