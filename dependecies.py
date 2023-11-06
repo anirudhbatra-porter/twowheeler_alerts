@@ -1,6 +1,6 @@
 import subprocess
 
-packages_to_install = ['snowflake-connector-python==2.8.3', 'pandas', 'numpy', 'math', 'dateutil', 'warnings']
+packages_to_install = ['snowflake-connector-python==2.8.3', 'pandas', 'numpy', 'math', 'dateutil', 'warnings', 'croniter']
 
 def install_dependencies():
   for package in packages_to_install:
