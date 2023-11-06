@@ -5,24 +5,16 @@ from google.colab import files
 import math
 from dateutil import relativedelta
 import warnings
-warnings.filterwarnings("ignore")
 import snowflake.connector
+warnings.filterwarnings("ignore")
+import alerts_util
 
 current_user = ''
 current_account = ''
 current_warehouse = ''
 conn = None
 
-def sf_authenticate(user, account, warehouse):
-  current_user = user
-  current_account = account
-  current_warehouse = warehouse
-  conn = snowflake.connector.connect(
-    user = user,
-    account = account,
-    authenticator = "externalbrowser",
-    warehouse = warehouse
-  )
+conn, current_user, current_account, current_warehouse = alerts_util.sf_authenticate(user, account, warehouse)
 
 def create_alert(alert_type, alert_name, cron_frequency, cron_expression, email_list, kpi_query=None, validation_query=None, report_table_query=None):
   if alert_type not in ['Validation', 'KPI']:
