@@ -21,3 +21,31 @@ def read_sql_file(file_name):
   sqlFile = fd.read()
   fd.close()
   return sqlFile
+
+def fetch_data(query, session):
+    df = pd.DataFrame()
+    try:
+        df = session.sql(query)
+        df = df.to_pandas()
+        df.columns = df.columns.str.lower()
+    except Exception as e:
+        print('There was an error with the database (read) operation: \
+        {}'.format(error))
+        print(query)
+    return df
+            
+def write_to_sfdb(df_dict, session, overwrite_dict):
+    try:
+        
+        for table_key, df_val in df_dict.items():
+            df_val.columns = df_val.columns.str.upper()
+            if df_val.shape[0] == 0:
+                print("Dataframe for table: " + str(table_key) + "is empty. Skipping the write operation.")
+                continue
+            # using the snowflake session object to write pandas dataframe to table in snowflake
+            session.write_pandas(df=df_val, table_name=table_key, overwrite=overwrite_dict[table_key], database='SANDBOX_DB', schema='TWO_WHEELERS', auto_create_table=True)
+            print("Data has been written into table: " + str(table_key))
+    
+    except Exception as e:
+            print('There was an error with the database (write) operation: \
+                {}'.format(e))
