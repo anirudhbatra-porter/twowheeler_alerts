@@ -55,3 +55,32 @@ def validate_cron_expression(exp):
   if 'L' not in exp:
     return croniter.is_valid(exp)
   return True
+
+def validate_alert(alert_type, cron_frequency, cron_expression, email_list, validation_query, report_table_query, kpi_query, current_warehouse):
+  fail_reason = ''
+  validation_flag = 1
+  
+  if alert_type not in ['Validation', 'KPI']:
+    fail_reason = 'Not a valid alert type'
+  elif cron_frequency == 'Other (specify CRON expression)' and cron_expression == '':
+    fail_reason = 'Please enter a valid CRON expression'
+  elif email_list == '':
+    fail_reason = 'Mailing list is empty'
+  elif alert_type == 'Validation' and (validation_query == '' or report_table_query == ''):
+    fail_reason = 'Please enter a valid query'
+  elif alert_type == 'KPI' and kpi_query == '':
+    fail_reason = 'Please enter a valid query'
+  elif '2_WHEELERS' not in current_warehouse:
+    fail_reason = 'Currently only 2 WHEELER warehouses are supported. For more information, please reach out to anirudh.batra@theporter.in'
+
+  if fail_reason != '':
+    validation_flag = 0
+
+  return [validation_flag, fail_reason]
+
+def validate_query(query, session):
+  try:
+    syntax_query = 'explain using json (' + query + ')'
+    output = fetch_date(syntax_query, session)
+  except Exception as e:
+    print('Query validation failed. Please check the syntax') 
