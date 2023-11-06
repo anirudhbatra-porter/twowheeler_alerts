@@ -6,6 +6,7 @@ import math
 from dateutil import relativedelta
 import warnings
 import snowflake.connector
+from croniter import croniter
 
 def sf_authenticate(user, account, warehouse):
   conn = snowflake.connector.connect(
@@ -49,3 +50,8 @@ def write_to_sfdb(df_dict, session, overwrite_dict):
     except Exception as e:
             print('There was an error with the database (write) operation: \
                 {}'.format(e))
+
+def validate_cron_expression(exp):
+  if 'L' not in exp:
+    return croniter.is_valid(exp)
+  return True
