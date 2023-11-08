@@ -61,7 +61,7 @@ def validate_cron_expression(exp):
 def validate_query(query, session):
   try:
     syntax_query = 'explain using json (' + query + ')'
-    output = fetch_date(syntax_query, session)
+    output = fetch_data(syntax_query, session)
   except Exception as e:
     print('Query validation failed. Please check the syntax')
 
