@@ -7,6 +7,7 @@ from dateutil import relativedelta
 import warnings
 import snowflake.connector
 from croniter import croniter
+import constants
 
 def sf_authenticate(user, account, warehouse):
   conn = snowflake.connector.connect(
@@ -95,5 +96,21 @@ def validate_alert(alert_type, cron_frequency, cron_expression, email_list, vali
     validation_flag = 0
     return [validation_flag, e]
 
-def create_sf_task(task_name, procedure_name, alert_name, cron_expression, time_zone, email_list, validation_query, report_table_query):
-  
+create_validation_task_query = """
+CREATE TASK SANDBOX_DB.TWO_WHEELERS.TASK_NAME
+WAREHOUSE = WAREHOUSE_NAME
+SCHEDULE = 'USING CRON CRON_EXPRESSION TIME_ZONE'
+AS
+CALL SANDBOX_DB.TWO_WHEELERS.PROCEDURE_NAME(query1, query2, email_list, alert_name)
+"""
+
+def create_sf_task(task_name, procedure_name, alert_name, cron_expression, time_zone, email_list, validation_query, report_table_query, warehouse, session):
+  task_query = constants.create_validation_task_query
+  char_to_replace = {'TASK_NAME': 'task_name', 'WAREHOUSE_NAME': 'warehouse', 'CRON_EXPRESSION': 'cron_expression', 
+                     'TIME_ZONE': 'time_zone', 'PROCEDURE_NAME': procedure_name, 'query1': validation_query,
+                     'query2': report_table_query, 'email_list': email_list, 'alert_name': alert_name}
+
+  for key, value in char_to_replace.items():
+    task_query = task_query.replace(key, value)
+
+  t = fetch_data(task_query, session)
