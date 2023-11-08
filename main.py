@@ -55,7 +55,7 @@ def create_alert(alert_type, alert_name, cron_frequency, cron_expression, email_
     else:
       create_kpi_alert(alert_name, cron_frequency, cron_expression, email_list, kpi_query)
   
-  except(Exception as e):
+  except Exception as e:
     print(f"Ran into an exception: {e}")
   
     
