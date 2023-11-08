@@ -96,14 +96,7 @@ def validate_alert(alert_type, cron_frequency, cron_expression, email_list, vali
   except Exception as e:
     validation_flag = 0
     return [validation_flag, e]
-
-create_validation_task_query = """
-CREATE TASK SANDBOX_DB.TWO_WHEELERS.TASK_NAME
-WAREHOUSE = WAREHOUSE_NAME
-SCHEDULE = 'USING CRON CRON_EXPRESSION TIME_ZONE'
-AS
-CALL SANDBOX_DB.TWO_WHEELERS.PROCEDURE_NAME(query1, query2, email_list, alert_name)
-"""
+    
 
 def create_sf_task(task_name, procedure_name, alert_name, cron_expression, time_zone, email_list, validation_query, report_table_query, warehouse, session):
   task_query = constants.create_validation_task_query
@@ -120,7 +113,7 @@ def create_sf_task(task_name, procedure_name, alert_name, cron_expression, time_
 def create_db_entry(alert_type, task_name, procedure_name, alert_name, cron_frequnecy, cron_expression, time_zone, created_by, email_list, validation_query, report_table_query, kpi_query, session):
   insert_db_query = constants.insert_table_query
   char_to_replace = {'CREATED_AT_VALUE': datetime.utcnow() + timedelta(hours=5, minutes=30), 'ALERT_TYPE_VALUE': alert_type, 
-                     'ALERT_NAME_VALUE': alert_name, 'CRON_FREQUENCY_VALUE': cron_frequency, 'CRON_EXPRESSION_VALUE': cron_expression, 
+                     'ALERT_NAME_VALUE': alert_name, 'CRON_FREQUENCY_VALUE': cron_frequency, 'CRON_EXPRESSION_VALUE': cron_expression + f" {time_zone}", 
                      'CREATED_BY_EMAIL_VALUE': created_by, 'MAILING_LIST_VALUE': email_list, 'KPI_QUERY_VALUE': kpi_query, 
                      'VALIDATION_FIRST_QUERY_VALUE': validation_query, 'VALIDATION_SECOND_QUERY_VALUE': report_table_query}
 
