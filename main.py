@@ -25,7 +25,7 @@ def create_validation_alert(alert_name, cron_frequency, cron_expression, email_l
   p = utils.fetch_data(constants.create_validation_procedure_query.replace('PROCEDURE_NAME', procedure_name))
   # create these functions
   utils.create_sf_task(task_name, procedure_name, alert_name, cron_expression, constants.time_zone, email_list, validation_query, report_table_query, current_warehouse, conn)
-  utils.create_db_entry()
+  utils.create_db_entry('Validation Alert', task_name, procedure_name, alert_name, cron_frequnecy, cron_expression, time_zone, current_user, email_list, validation_query, report_table_query, '', conn)
 
 def create_kpi_alert(alert_name, cron_frequency, cron_expression, email_list, kpi_query):
   print(constants.capability_unavailable_msg)
