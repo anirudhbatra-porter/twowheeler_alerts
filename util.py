@@ -94,3 +94,6 @@ def validate_alert(alert_type, cron_frequency, cron_expression, email_list, vali
   except Exception as e:
     validation_flag = 0
     return [validation_flag, e]
+
+def create_sf_task(task_name, procedure_name, alert_name, cron_expression, time_zone, email_list, validation_query, report_table_query):
+  
