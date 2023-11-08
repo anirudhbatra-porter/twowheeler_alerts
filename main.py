@@ -32,7 +32,7 @@ def create_kpi_alert(alert_name, cron_frequency, cron_expression, email_list, kp
 
 def create_alert(alert_type, alert_name, cron_frequency, cron_expression, email_list, kpi_query=None, validation_query=None, report_table_query=None):
   try:
-    validation_flag, fail_reason = utils.validate_alert(alert_type, cron_frequency, cron_expression, email_list, validation_query, report_table_query, kpi_query, current_warehouse, conn)
+    validation_flag, fail_reason = util.validate_alert(alert_type, cron_frequency, cron_expression, email_list, validation_query, report_table_query, kpi_query, current_warehouse, conn)
     
     if ~validation_flag:
       raise Exception(f"Validation failed with reason: {fail_reason}")
