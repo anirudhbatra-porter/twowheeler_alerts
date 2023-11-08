@@ -35,7 +35,7 @@ def create_alert(alert_type, alert_name, cron_frequency, cron_expression, email_
     validation_flag, fail_reason = utils.validate_alert(alert_type, cron_frequency, cron_expression, email_list, validation_query, report_table_query, kpi_query, current_warehouse, conn)
     
     if ~validation_flag:
-      Raise Exception(f"Validation failed with reason: {fail_reason}")
+      raise Exception(f"Validation failed with reason: {fail_reason}")
       
     check_table_sql = utils.read_sql_file('check_table.sql')
     check_table_flag = utils.fetch_data(check_table_sql, conn).flag.iloc[0]
