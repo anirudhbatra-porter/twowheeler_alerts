@@ -15,7 +15,6 @@ current_warehouse = ''
 conn = None
 procedure_name = ''
 task_name = ''
-time_zone = 'Asia/Kolkata'
 
 def sf_authenticate(user, account, warehouse):
   conn, current_user, current_account, current_warehouse = util.sf_authenticate(user, account, warehouse)
@@ -25,7 +24,7 @@ def create_validation_alert(alert_name, cron_frequency, cron_expression, email_l
   task_name = str.upper(alert_name) + '_TASK'
   p = utils.fetch_data(constants.create_validation_procedure_query.replace('PROCEDURE_NAME', procedure_name))
   # create these functions
-  utils.create_sf_task(task_name, procedure_name, alert_name, cron_expression, time_zone, email_list, validation_query, report_table_query)
+  utils.create_sf_task(task_name, procedure_name, alert_name, cron_expression, constants.time_zone, email_list, validation_query, report_table_query, current_warehouse, conn)
   utils.create_db_entry()
 
 def create_kpi_alert(alert_name, cron_frequency, cron_expression, email_list, kpi_query):
