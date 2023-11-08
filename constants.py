@@ -76,3 +76,11 @@ def main(session: snowpark.Session, query1, query2, email_list, alert_name):
     return "REACHED END OF CODE"
     ';
 """
+
+create_validation_task_query = """
+CREATE TASK TASK_NAME
+WAREHOUSE = WAREHOUSE_NAME
+SCHEDULE = 'USING CRON CRON_EXPRESSION TIME_ZONE'
+AS
+CALL SANDBOX_DB.TWO_WHEELERS.PROCEDURE_NAME(query1, query2, email_list, alert_name)
+"""
