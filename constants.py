@@ -8,6 +8,8 @@ cron_map = {
 
 capability_unavailable_msg = 'This capability is coming soon! For more information, please reach out to anirudh.batra@theporter.in'
 
+time_zone = 'Asia/Kolkata'
+
 create_validation_procedure_query = """
 CREATE OR REPLACE PROCEDURE SANDBOX_DB.TWO_WHEELERS.PROCEDURE_NAME(query1 string, query2 string, email_list string, alert_name string)
 RETURNS VARCHAR(16777216)
