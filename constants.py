@@ -86,3 +86,8 @@ SCHEDULE = 'USING CRON CRON_EXPRESSION TIME_ZONE'
 AS
 CALL SANDBOX_DB.TWO_WHEELERS.PROCEDURE_NAME(query1, query2, email_list, alert_name)
 """
+
+insert_table_query = """
+INSERT INTO SANDBOX_DB.TWO_WHEELERS.SCHEDULED_ALERTS (id, start_date, end_date, category)
+Values (13, ‘2022-03-09 16:15:19.500’, ‘2022-03-11 17:53:57.753’, 2);
+"""
