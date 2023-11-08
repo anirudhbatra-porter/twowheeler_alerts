@@ -114,3 +114,8 @@ def create_sf_task(task_name, procedure_name, alert_name, cron_expression, time_
     task_query = task_query.replace(key, value)
 
   t = fetch_data(task_query, session)
+
+(CREATED_AT_VALUE, ALERT_TYPE_VALUE, ALERT_NAME_VALUE, CRON_FREQUENCY_VALUE, CRON_EXPRESSION_VALUE, CREATED_BY_EMAIL_VALUE, MAILING_LIST_VALUE, KPI_QUERY_VALUE, VALIDATION_FIRST_QUERY_VALUE, VALIDATION_SECOND_QUERY_VALUE);
+
+def create_db_entry(alert_type, task_name, procedure_name, alert_name, cron_frequnecy, cron_expression, time_zone, created_by, email_list, validation_query, report_table_query, kpi_query, session):
+  
