@@ -7,6 +7,7 @@ from dateutil import relativedelta
 import warnings
 import snowflake.connector
 from croniter import croniter
+from datetime import datetime, timedelta
 import constants
 
 def sf_authenticate(user, account, warehouse):
@@ -115,7 +116,15 @@ def create_sf_task(task_name, procedure_name, alert_name, cron_expression, time_
 
   t = fetch_data(task_query, session)
 
-(CREATED_AT_VALUE, ALERT_TYPE_VALUE, ALERT_NAME_VALUE, CRON_FREQUENCY_VALUE, CRON_EXPRESSION_VALUE, CREATED_BY_EMAIL_VALUE, MAILING_LIST_VALUE, KPI_QUERY_VALUE, VALIDATION_FIRST_QUERY_VALUE, VALIDATION_SECOND_QUERY_VALUE);
 
 def create_db_entry(alert_type, task_name, procedure_name, alert_name, cron_frequnecy, cron_expression, time_zone, created_by, email_list, validation_query, report_table_query, kpi_query, session):
-  
+  insert_db_query = constants.insert_table_query
+  char_to_replace = {'CREATED_AT_VALUE': datetime.utcnow() + timedelta(hours=5, minutes=30), 'ALERT_TYPE_VALUE': alert_type, 
+                     'ALERT_NAME_VALUE': alert_name, 'CRON_FREQUENCY_VALUE': cron_frequency, 'CRON_EXPRESSION_VALUE': cron_expression, 
+                     'CREATED_BY_EMAIL_VALUE': created_by, 'MAILING_LIST_VALUE': email_list, 'KPI_QUERY_VALUE': kpi_query, 
+                     'VALIDATION_FIRST_QUERY_VALUE': validation_query, 'VALIDATION_SECOND_QUERY_VALUE': report_table_query}
+
+  for key, value in char_to_replace.items():
+    insert_db_query = insert_db_query.replace(key, value)
+
+  i = fetch_data(insert_db_query, session)
