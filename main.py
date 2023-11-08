@@ -44,7 +44,7 @@ def create_alert(alert_type, alert_name, cron_frequency, cron_expression, email_
       create_table_sql = utils.read_sql_file('create_alerts_table.sql')
       create_table_result = utils.fetch_data(create_table_sql, conn)
   
-    if cron_frequency <> 'Other (specify CRON expression)' and cron_expression == '':
+    if cron_frequency != 'Other (specify CRON expression)' and cron_expression == '':
       cron_expression = constants.cron_map[cron_frequency]
   
     if ~utils.validate_cron_expression(cron_expression):
